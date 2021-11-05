@@ -1,11 +1,4 @@
-/*
-|----------------------------------------------------------------------------
-	AboutMe - Personal Portfolio Resume Template Main CSS
-	Author: MGScoder
-	Author URL: https://themeforest.net/user/mgscoder
-	Primary color: #04b962
-|----------------------------------------------------------------------------
-*/
+/*responsive css*/
 @media screen and (max-width: 1024px) {
 	.timeline > li > .timeline-panel{
 		width: 45%;

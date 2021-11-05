@@ -1,11 +1,3 @@
-/*
- *  Vide - v0.5.1
- *  Easy as hell jQuery plugin for video backgrounds.
- *  http://vodkabears.github.io/vide/
- *
- *  Made by Ilya Makarov
- *  Under MIT License
- */
 !(function(root, factory) {
   if (typeof define === 'function' && define.amd) {
     define(['jquery'], factory);
@@ -19,7 +11,7 @@
   'use strict';
 
   /**
-   * Name of the plugin
+   * plugin name
    * @private
    * @const
    * @type {String}
@@ -27,7 +19,7 @@
   var PLUGIN_NAME = 'vide';
 
   /**
-   * Default settings
+   * default setting
    * @private
    * @const
    * @type {Object}
@@ -46,7 +38,7 @@
   };
 
   /**
-   * Not implemented error message
+   * error - not implementing
    * @private
    * @const
    * @type {String}
@@ -69,14 +61,14 @@
     var len;
     var i;
 
-    // Remove spaces around delimiters and split
+    // remove spaces around delimiters and split
     arr = str.replace(/\s*:\s*/g, ':').replace(/\s*,\s*/g, ',').split(',');
 
-    // Parse a string
+    // parse a string
     for (i = 0, len = arr.length; i < len; i++) {
       option = arr[i];
 
-      // Ignore urls and a string without colon delimiters
+      // ignore urls and a string without colon delimiters
       if (
         option.search(/^(http|https|ftp):\/\//) !== -1 ||
         option.search(':') === -1
@@ -88,34 +80,32 @@
       prop = option.substring(0, delimiterIndex);
       val = option.substring(delimiterIndex + 1);
 
-      // If val is an empty string, make it undefined
+      // if value is an empty string, make it undefined
       if (!val) {
         val = undefined;
       }
 
-      // Convert a string value if it is like a boolean
+      // convert a string value if it is like a boolean
       if (typeof val === 'string') {
         val = val === 'true' || (val === 'false' ? false : val);
       }
 
-      // Convert a string value if it is like a number
+      // convert a string value if it is like a number
       if (typeof val === 'string') {
         val = !isNaN(val) ? +val : val;
       }
 
       obj[prop] = val;
     }
-
-    // If nothing is parsed
+    // if nothing is parsed
     if (prop == null && val == null) {
       return str;
     }
 
     return obj;
   }
-
   /**
-   * Parse a position option
+   * parse a position option
    * @private
    * @param {String} str
    * @returns {Object}
@@ -123,7 +113,7 @@
   function parsePosition(str) {
     str = '' + str;
 
-    // Default value is a center
+    // default value is a center
     var args = str.split(/\s+/);
     var x = '50%';
     var y = '50%';
@@ -134,7 +124,7 @@
     for (i = 0, len = args.length; i < len; i++) {
       arg = args[i];
 
-      // Convert values
+      // convert values
       if (arg === 'left') {
         x = '0%';
       } else if (arg === 'right') {
@@ -162,7 +152,7 @@
   }
 
   /**
-   * Search a poster
+   * search a poster
    * @private
    * @param {String} path
    * @param {Function} callback
@@ -179,7 +169,7 @@
   }
 
   /**
-   * Vide constructor
+   * vide constructor
    * @param {HTMLElement} element
    * @param {Object|String} path
    * @param {Object|String} options
@@ -188,19 +178,19 @@
   function Vide(element, path, options) {
     this.$element = $(element);
 
-    // Parse path
+    // parse path
     if (typeof path === 'string') {
       path = parseOptions(path);
     }
 
-    // Parse options
+    // parse options
     if (!options) {
       options = {};
     } else if (typeof options === 'string') {
       options = parseOptions(options);
     }
 
-    // Remove an extension
+    // remove an extension
     if (typeof path === 'string') {
       path = path.replace(/\.\w*$/, '');
     } else if (typeof path === 'object') {
@@ -225,7 +215,7 @@
   }
 
   /**
-   * Initialization
+   * initialization
    * @public
    */
   Vide.prototype.init = function() {
@@ -240,7 +230,7 @@
     var $video;
     var $wrapper;
 
-    // Set styles of a video wrapper
+    // set styles of a video wrapper
     $wrapper = vide.$wrapper = $('<div>')
       .addClass(settings.className)
       .css({
@@ -260,7 +250,7 @@
         'background-position': position.x + ' ' + position.y
       });
 
-    // Get a poster path
+    // get a poster path
     if (typeof path === 'object') {
       if (path.poster) {
         poster = path.poster;
@@ -275,7 +265,7 @@
       }
     }
 
-    // Set a video poster
+    // set a video poster
     if (posterType === 'detect') {
       findPoster(poster, function(url) {
         $wrapper.css('background-image', 'url(' + url + ')');
@@ -284,7 +274,7 @@
       $wrapper.css('background-image', 'url(' + poster + '.' + posterType + ')');
     }
 
-    // If a parent element has a static position, make it relative
+    // if a parent element has a static position, make it relative
     if ($element.css('position') === 'static') {
       $element.css('position', 'relative');
     }
@@ -312,12 +302,10 @@
         '<source src="' + path + '.ogv" type="video/ogg">' +
         '</video>');
     }
-
-    // https://github.com/VodkaBears/Vide/issues/110
     try {
       $video
 
-        // Set video properties
+        // set video properties
         .prop({
           autoplay: settings.autoplay,
           loop: settings.loop,
@@ -331,7 +319,7 @@
       throw new Error(NOT_IMPLEMENTED_MSG);
     }
 
-    // Video alignment
+    // video alignment
     $video.css({
       margin: 'auto',
       position: 'absolute',
@@ -343,17 +331,17 @@
       '-moz-transform': 'translate(-' + position.x + ', -' + position.y + ')',
       transform: 'translate(-' + position.x + ', -' + position.y + ')',
 
-      // Disable visibility, while loading
+      // isable visibility, while loading
       visibility: 'hidden',
       opacity: 0
     })
 
-    // Resize a video, when it's loaded
+    // resize a video, when it's loaded
     .one('canplaythrough.' + PLUGIN_NAME, function() {
       vide.resize();
     })
 
-    // Make it visible, when it's already playing
+    // make it visible, when it's already playing
     .one('playing.' + PLUGIN_NAME, function() {
       $video.css({
         visibility: 'visible',
@@ -362,20 +350,20 @@
       $wrapper.css('background-image', 'none');
     });
 
-    // Resize event is available only for 'window'
-    // Use another code solutions to detect DOM elements resizing
+    // resize event is available only for 'window'
+    // use diff code solutions to detect DOM elements resizing
     $element.on('resize.' + PLUGIN_NAME, function() {
       if (settings.resizing) {
         vide.resize();
       }
     });
 
-    // Append a video
+    // append a video
     $wrapper.append($video);
   };
 
   /**
-   * Get a video element
+   * get a video element
    * @public
    * @returns {HTMLVideoElement}
    */
@@ -396,18 +384,18 @@
     var $video = this.$video;
     var video = $video[0];
 
-    // Get a native video size
+    // get a native video size
     var videoHeight = video.videoHeight;
     var videoWidth = video.videoWidth;
 
-    // Get a wrapper size
+    // get wrapper size
     var wrapperHeight = $wrapper.height();
     var wrapperWidth = $wrapper.width();
 
     if (wrapperWidth / videoWidth > wrapperHeight / videoHeight) {
       $video.css({
 
-        // +2 pixels to prevent an empty space after transformation
+        // add 2 pixels to prevent an empty space after transformation
         width: wrapperWidth + 2,
         height: 'auto'
       });
@@ -422,7 +410,7 @@
   };
 
   /**
-   * Destroy a video background
+   * Destroy a v-background
    * @public
    */
   Vide.prototype.destroy = function() {
@@ -433,7 +421,7 @@
   };
 
   /**
-   * Special plugin object for instances.
+   *  plugin object for instances.
    * @public
    * @type {Object}
    */
@@ -442,7 +430,7 @@
   };
 
   /**
-   * Plugin constructor
+   * plugin constructor
    * @param {Object|String} path
    * @param {Object|String} options
    * @returns {JQuery}
@@ -453,11 +441,9 @@
 
     this.each(function() {
       instance = $.data(this, PLUGIN_NAME);
-
-      // Destroy the plugin instance if exists
+      // destroy the plugin instance if exists
       instance && instance.destroy();
-
-      // Create the plugin instance
+      // plugin instance
       instance = new Vide(this, path, options);
       instance.index = $[PLUGIN_NAME].lookup.push(instance) - 1;
       $.data(this, PLUGIN_NAME, instance);
@@ -468,8 +454,6 @@
 
   $(document).ready(function() {
     var $window = $(window);
-
-    // Window resize event listener
     $window.on('resize.' + PLUGIN_NAME, function() {
       for (var len = $[PLUGIN_NAME].lookup.length, i = 0, instance; i < len; i++) {
         instance = $[PLUGIN_NAME].lookup[i];
@@ -479,16 +463,10 @@
         }
       }
     });
-
-    // https://github.com/VodkaBears/Vide/issues/68
     $window.on('unload.' + PLUGIN_NAME, function() {
       return false;
     });
-
-    // Auto initialization
-    // Add 'data-vide-bg' attribute with a path to the video without extension
-    // Also you can pass options throw the 'data-vide-options' attribute
-    // 'data-vide-options' must be like 'muted: false, volume: 0.5'
+//aouto initialize
     $(document).find('[data-' + PLUGIN_NAME + '-bg]').each(function(i, element) {
       var $element = $(element);
       var options = $element.data(PLUGIN_NAME + '-options');

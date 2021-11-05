@@ -1,8 +1,4 @@
-/*
-|--------------------------------------------------------------------------
-	AboutMe - Personal Portfolio Resume Template Main JS
-|--------------------------------------------------------------------------
-*/
+/*tom-ngoe web js*/
 document.addEventListener("touchstart", function() {},false);
 (function ($) {
 	"use strict";
@@ -16,12 +12,6 @@ document.addEventListener("touchstart", function() {},false);
 			window.scrollTo(0, currentScrollPosition - wheelDelta);
 		});
 	}
-	
-/*
-|--------------------------------------------------------------------------
-	carousel
-|--------------------------------------------------------------------------
-*/
 	//Main home Slider
 	$('#home-carousel').owlCarousel({
 		items: 1,
