@@ -1,12 +1,6 @@
-/*
- * jquery-circle-progress - jQuery Plugin to draw animated circular progress bars
- *
- * @author https://github.com/kottenator
- * @version 0.6.0
- */
 
 $.circleProgress = {
-    // Default options (you may override them)
+    // defaul opns.
     defaults: {
         /**
          * This is the only required option. It should be from 0.0 to 1.0
@@ -26,24 +20,7 @@ $.circleProgress = {
          */
         startAngle: -Math.PI,
 
-        /**
-         * Width of the arc. By default it's calculated as 1/14 of size, but you may set it explicitly in pixels
-         * type {int|'auto'}
-         */
         thickness: 'auto',
-
-        /**
-         * Fill of the arc. You may set it to:
-         *   - solid color:
-         *     - { color: '#3aeabb' }
-         *     - { color: 'rgba(255, 255, 255, .3)' }
-         *   - linear gradient (left to right):
-         *     - { gradient: ['#3aeabb', '#fdd250'] }
-         *     - { gradient: ['red', 'green', 'blue'] }
-         *   - image:
-         *     - { image: 'http://i.imgur.com/pT0i89v.png' }
-         *     - { color: 'lime', image: 'http://i.imgur.com/pT0i89v.png' } - color displayed until the image is loaded
-         */
         fill: {
             gradient: ['#3aeabb', '#fdd250']
         },
@@ -54,9 +31,6 @@ $.circleProgress = {
          */
         emptyFill: 'rgba(0, 0, 0, .1)',
 
-        /**
-         * Animation config (see jQuery animations: http://api.jquery.com/animate/)
-         */
         animation: {
             duration: 1200,
             easing: 'circleProgressEasing'
@@ -64,31 +38,12 @@ $.circleProgress = {
     }
 };
 
-// Renamed ease-in-out-cubic
+// renamed ease-in-out-cubic
 $.easing.circleProgressEasing = function(x, t, b, c, d) {
     if ((t /= d / 2) < 1)
         return c / 2 * t * t * t + b;
     return c / 2 * ((t -= 2) * t * t + 2) + b;
 };
-
-/**
- * Draw animated circular progress bar.
- *
- * Appends <canvas> to the element or updates already appended one.
- *
- * If animated, throws 3 events:
- *
- *   - circle-animation-start(jqEvent)
- *   - circle-animation-progress(jqEvent, animationProgress, stepValue) - multiple event;
- *                                                                        animationProgress: from 0.0 to 1.0;
- *                                                                        stepValue: from 0.0 to value
- *   - circle-animation-end(jqEvent)
- *
- * @param options Example: { value: 0.75, size: 50, animation: false };
- *                you may set any of default options (see above);
- *                `animation` may be set to false;
- *                you may also use .circleProgress('widget') to get the canvas
- */
 $.fn.circleProgress = function(options) {
     if (options == 'widget')
         return this.data('circle-progress');
