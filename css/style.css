@@ -551,6 +551,9 @@ a img.logo-color {
 .breadcrumb a {
   color: #fff;
 }
+.breadcrumb a:hover {
+  color: #04b962;
+}
 .breadcrumb > .active {
   color: #fff;
 }
